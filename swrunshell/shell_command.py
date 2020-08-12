@@ -81,7 +81,7 @@ def call(command, **kwargs):
         print_command = IS_PRINT_COMMAND
 
     def sub_func(*args, **kwargs2):
-        subprocess.call(*args, **kwargs2)
+        return subprocess.call(*args, **kwargs2)
 
     return _call(sub_func, command, print_command=print_command, **kwargs)
 
@@ -101,7 +101,7 @@ def check_call(command, **kwargs):
         print_command = IS_PRINT_COMMAND
 
     def sub_func(*args, **kwargs2):
-        subprocess.check_call(*args, **kwargs2)
+        return subprocess.check_call(*args, **kwargs2)
 
     return _call(sub_func, command, is_check=True, print_command=print_command, **kwargs)[0]
     # return _call(command, is_check=True, **kwargs)[0]
