@@ -9,6 +9,7 @@ __author__ = 'shede333'
 import os
 import subprocess
 from datetime import datetime
+import sys
 
 from swtermcolor import SWTermColor
 
@@ -46,7 +47,13 @@ def _call(func_obj, command, is_check=False, print_command=False, print_log=Fals
             now_time = datetime.now().strftime("command:%Y-%m-%d %H:%M:%S")
             print("[{}] run shell: {}".format(now_time, command))
         # command_output = subprocess.check_output(command, shell=True, **kwargs)
-        command_output = func_obj(command, shell=True, text=True, **kwargs)
+
+        if sys.version_info < (3, 7):
+            command_output = func_obj(command, shell=True, **kwargs)
+            if isinstance(command_output, bytes):
+                command_output = command_output.decode()
+        else:
+            command_output = func_obj(command, shell=True, text=True, **kwargs)
         if command_output and print_log:
             print(command_output)
 
